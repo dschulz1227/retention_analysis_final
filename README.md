@@ -1,3 +1,18 @@
+__________        ___                __  ____  
+\______   \ _____/  |_  ____   _____/  |_|__| ____   ____  
+ |       _// __ \   __\/ __ \ /    \   __\  |/  _ \ /    \ 
+ |    |   \  ___/|  | \  ___/|   |  \  | |  (  <_> )   |  
+ |____|_  /\___  >__|  \___  >___|  /__| |__|\____/|___|  /
+        \/     \/          \/     \/                    \/ 
+   _____                .__               .__        
+  /  _  \   ____ _____  |  | ___.__. _____|__| ______
+ /  /_\  \ /    _  \ |  |<   |  |/  ___/  |/  ___/
+/    |    \   |  \/ __ \|  |_\___  |\___ \|  |\___ \ 
+\____|__  /___|  (____  /____/ ____/____  >__/____  >
+        \/     \/     \/     \/         \/        \/ 
+
+
+
 This program was created to compare the values of fields entered by 3 different groups of individuals.
 
 The three values derive from a Camera Check sheet, where each Server has it's owm row for a value to be entered. 
