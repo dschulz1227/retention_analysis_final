@@ -32,6 +32,7 @@ mean_list = []
 total_dict = {}
 differences_dict = {}
 averages_dict = {}
+# results_dict = {}
 
 """Create variable for file to write data to"""
 out_file = open("C:\\Retention Forms\\results_folder\\january", "w")
@@ -51,7 +52,6 @@ def find_avg(colName):
     b = df.loc[1, colName]
     c = df.loc[2, colName]
     daily_average = round((a + b + c) / 3)
-    # mean_list.append(daily_average)
     return daily_average
 
 
@@ -79,12 +79,9 @@ for colName in server_cols:
     total_dict[colName] = find_total(colName)
     averages_dict[colName] = find_avg(colName)
     differences_dict[colName] = find_difference(colName)
+    # results_dict[colName] = find_difference(colName), find_avg(colName), find_total(colName)
 
 print(f"\nTotals: {total_dict}\nAverages: {averages_dict}\n% Differences: {differences_dict}")
 
 # out_file.close()
-# print(results_dict)
-# print(mean_list)
-# print(differences_dict)
-# print(total_dict)
-# print(averages_dict)
+
