@@ -22,7 +22,7 @@ Find most efficient way to analyze data for any circumstances(daily, monthly, ye
 """
 
 """ Below is hardcoded path to CSV and creates a dataframe from the columns and row """
-my_csv_file = "../retention_analysis_final/ret_prac_csv.csv"
+my_csv_file = "C:\\Retention Forms\\ret_prac_csv.csv"
 df = pd.read_csv(my_csv_file, index_col=[0])
 df = df.reset_index(drop=False)
 
@@ -31,8 +31,27 @@ mean_list = []
 """List of results as dictionary"""
 results_dict = {}
 
-"""Create variable for file to write data to """
-out_file = open(f"/Users/blckout/PycharmProjects/retention_analysis_final/results_folder/January_6th", "w")
+"""Create variable for file to write data to"""
+out_file = open(f"C:\\Retention Forms\\results_folder\\january", "w")
+
+
+def find_total(colName):
+    a = df.loc[0, colName]
+    b = df.loc[1, colName]
+    c = df.loc[2, colName]
+    row_total = a + b + c
+
+    return row_total
+
+
+def find_avg(colName):
+    a = df.loc[0, colName]
+    b = df.loc[1, colName]
+    c = df.loc[2, colName]
+    daily_average = (a + b + c) / 3
+    mean_list.append(daily_average)
+    print(mean_list)
+    return daily_average
 
 
 def find_difference(colName):
@@ -40,19 +59,15 @@ def find_difference(colName):
     a = df.loc[0, colName]
     b = df.loc[1, colName]
     c = df.loc[2, colName]
-
-    sum_values = a + b + c
-
     """
     Equation that finds Percentage of the difference between two values
     abs()converts negative number to positive number
     """
-
     diff_ab = round((abs(a - b)) / ((a + b) / 2) * 100)
     diff_ac = round((abs(a - c)) / ((a + c) / 2) * 100)
     diff_bc = round((abs(b - c)) / ((b + c) / 2) * 100)
 
-    print(f"Diff AB : {diff_ab}, Diff AC : {diff_ac}, Diff BC : {diff_bc}")
+    return diff_ab, diff_ac, diff_bc
 
     # if diff_ab > 25:
     #     # print(f"Diff AB = {diff_ab} - greater than 25")
@@ -73,17 +88,14 @@ def find_difference(colName):
     #     # print(f"Diff BC = {diff_bc} is All Good")
     #     out_file.write(f"Diff BC = {diff_bc} is All Good")
 
-    """Find the average of the 3 values for each row and add them to a list"""
-    daily_average = sum_values / 3
-    mean_list.append(round(daily_average))
-
-    return daily_average, a, b, c, diff_ab, diff_ac, diff_bc
-
 
 server_cols = [x for x in df.columns if x.startswith('IV-') or x.startswith('NSM-')]
 
 for colName in server_cols:
     # out_file.write(f"\n{find_difference(colName)}")
     retention_avg = find_difference(colName)
-    results_dict[colName] = float(round(retention_avg))
+    results_dict[colName] = retention_avg
+
 # out_file.close()
+print(results_dict)
+print(mean_list)
