@@ -29,10 +29,12 @@ df = df.reset_index(drop=False)
 """List of all averages"""
 mean_list = []
 """List of results as dictionary"""
-results_dict = {}
+total_dict = {}
+differences_dict = {}
+averages_dict = {}
 
 """Create variable for file to write data to"""
-out_file = open(f"C:\\Retention Forms\\results_folder\\january", "w")
+out_file = open("C:\\Retention Forms\\results_folder\\january", "w")
 
 
 def find_total(colName):
@@ -48,9 +50,8 @@ def find_avg(colName):
     a = df.loc[0, colName]
     b = df.loc[1, colName]
     c = df.loc[2, colName]
-    daily_average = (a + b + c) / 3
-    mean_list.append(daily_average)
-    print(mean_list)
+    daily_average = round((a + b + c) / 3)
+    # mean_list.append(daily_average)
     return daily_average
 
 
@@ -69,33 +70,21 @@ def find_difference(colName):
 
     return diff_ab, diff_ac, diff_bc
 
-    # if diff_ab > 25:
-    #     # print(f"Diff AB = {diff_ab} - greater than 25")
-    #     out_file.write(f"Diff AB = {diff_ab} - greater than 25")
-    # else:
-    #     # print(f"Diff AB = {diff_ab} is All Good")
-    #     out_file.write(f"Diff AB = {diff_ab} is All Good")
-    # if diff_ac > 25:
-    #     # print(f"Diff AC = {diff_ac} greater than 25")
-    #     out_file.write(f"Diff AC = {diff_ac} greater than 25")
-    # else:
-    #     # print(f"Diff AC = {diff_ac} is All Good")
-    #     out_file.write(f"Diff AC = {diff_ac} is All Good")
-    # if diff_bc > 25:
-    #     # print(f"Diff BC = {diff_bc} is greater than 25")
-    #     out_file.write(f"Diff BC = {diff_bc} is greater than 25")
-    # else:
-    #     # print(f"Diff BC = {diff_bc} is All Good")
-    #     out_file.write(f"Diff BC = {diff_bc} is All Good")
-
 
 server_cols = [x for x in df.columns if x.startswith('IV-') or x.startswith('NSM-')]
 
 for colName in server_cols:
     # out_file.write(f"\n{find_difference(colName)}")
-    retention_avg = find_difference(colName)
-    results_dict[colName] = retention_avg
+    # print(colName, percent_differences)
+    total_dict[colName] = find_total(colName)
+    averages_dict[colName] = find_avg(colName)
+    differences_dict[colName] = find_difference(colName)
+
+print(f"\nTotals: {total_dict}\nAverages: {averages_dict}\n% Differences: {differences_dict}")
 
 # out_file.close()
-print(results_dict)
-print(mean_list)
+# print(results_dict)
+# print(mean_list)
+# print(differences_dict)
+# print(total_dict)
+# print(averages_dict)
