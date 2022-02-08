@@ -1,5 +1,6 @@
 # import logo from art
 import pandas as pd
+import pprint
 
 """
 Engineer a program that can analyze the data between each of the 3 shifts' camera checks in order to compare
@@ -22,7 +23,9 @@ Find most efficient way to analyze data for any circumstances(daily, monthly, ye
 """
 
 """ Below is hardcoded path to CSV and creates a dataframe from the columns and row """
-my_csv_file = "C:\\Retention Forms\\ret_prac_csv.csv"
+""" First line is path at work, second is path at home"""
+# my_csv_file = "C:\\Retention Forms\\ret_prac_csv.csv"
+my_csv_file = "/Users/blckout/PycharmProjects/retention_analysis_final/ret_prac_csv.csv"
 df = pd.read_csv(my_csv_file, index_col=[0])
 df = df.reset_index(drop=False)
 
@@ -32,10 +35,12 @@ mean_list = []
 total_dict = {}
 differences_dict = {}
 averages_dict = {}
-# results_dict = {}
+results = {}
+results_array = []
 
 """Create variable for file to write data to"""
-out_file = open("C:\\Retention Forms\\results_folder\\january", "w")
+# out_file = open("C:\\Retention Forms\\results_folder\\january", "w")
+out_file = open("/Users/blckout/PycharmProjects/retention_analysis_final/results_folder/new.csv", "w")
 
 
 def find_total(colName):
@@ -74,14 +79,28 @@ def find_difference(colName):
 server_cols = [x for x in df.columns if x.startswith('IV-') or x.startswith('NSM-')]
 
 for colName in server_cols:
-    # out_file.write(f"\n{find_difference(colName)}")
-    # print(colName, percent_differences)
+    # print(f"{colName}: Total: {find_total(colName)}, Differences: {find_difference(colName)},"
+    #       f"Average: {find_avg(colName)}")
+
+    """Below is code to write data to csv file as string"""
+    # out_file.write(f"{colName}: Total: {find_total(colName)}, Differences: {find_difference(colName)},"
+    #                f" Average: {find_avg(colName)}")
+
+    """Below creates a dictionary of each rows calculated values"""
+    results[colName] = {"Total: ": find_total(colName),
+                        "Average:": find_avg(colName),
+                        "% Differences:": find_difference(colName)}
+
+    """Below adds each calculation to it's own, separate dictionary"""
     total_dict[colName] = find_total(colName)
     averages_dict[colName] = find_avg(colName)
     differences_dict[colName] = find_difference(colName)
+
     # results_dict[colName] = find_difference(colName), find_avg(colName), find_total(colName)
+    # out_file.write(results)
 
-print(f"\nTotals: {total_dict}\nAverages: {averages_dict}\n% Differences: {differences_dict}")
+# print(f"\nTotals: {total_dict}\nAverages: {averages_dict}\n% Differences: {differences_dict}")
+pprint.pprint(results)
+out_file.close()
 
-# out_file.close()
 
