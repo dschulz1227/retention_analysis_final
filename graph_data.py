@@ -13,6 +13,8 @@ for k, v in results.items():
     dict_values.append(v)
     # print(k, '-->', v)
 
+"""EACH DICT_KEY NEEDS A LIST OF 3 VALUES"""
+# print(dict_keys)
 value_names = []
 values = []
 largest_dif = 0
@@ -28,15 +30,11 @@ for k, v in dict_values[0].items():
         values.append(v)
     """always append k to keys"""
     value_names.append(k)
+    print(k, v)
 
-# print(largest_dif)
-# print(dict_keys)
-# print(dict_values)
-# print(keys)
-print(values)
+"""Values is the list of 3 calculated values from 1 whole day(3 forms)"""
+print(values[0])
 
-"""Grab highest value in the list of % differences"""
-# print(max(values[2]))
 
 """ give each key a variable to use in plots """
 # key_total = keys[0]
