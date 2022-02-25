@@ -18,12 +18,14 @@ Find most efficient way to analyze data for any amount of time(daily, monthly, y
 """
 
 """creates new file to write content too"""
-out_file = open("/Users/blckout/PycharmProjects/retention_analysis_final/results_folder/new.csv", "w")
+# out_file = open("/Users/blckout/PycharmProjects/retention_analysis_final/results_folder/new.csv", "w")
+out_file = open("results\\results.txt", "w")
+
 
 """ Below is hardcoded path to CSV and creates a dataframe from the columns and row """
 """ First line is path at work, second is path at home"""
-# my_csv_file = "C:\\Retention Forms\\ret_prac_csv.csv"
-my_csv_file = "/Users/blckout/PycharmProjects/retention_analysis_final/ret_prac_csv.csv"
+my_csv_file = "ret_prac_csv.csv"
+# my_csv_file = "/Users/blckout/PycharmProjects/retention_analysis_final/ret_prac_csv.csv"
 
 """create dataframe from csv file info"""
 df = pd.read_csv(my_csv_file, index_col=[0])
@@ -52,6 +54,9 @@ def find_avg(colName):
     return daily_average
 
 
+differences_dict = {}
+
+
 def find_difference(colName):
     """Use this to compare the values within each column to find differences within the data"""
     a = df.loc[0, colName]
@@ -63,17 +68,14 @@ def find_difference(colName):
     diff_ac = round((abs(a - c)) / ((a + c) / 2) * 100)
     diff_bc = round((abs(b - c)) / ((b + c) / 2) * 100)
 
-    if diff_ab > 15:
-        print(f"A={a} and B={b} difference: {diff_ab}%")
-    if diff_ac > 15:
-        print(f"A={a} and C={c} difference: {diff_ac}%")
-    if diff_bc > 15:
-        print(f"B={b} and C={c} difference: {diff_bc}%")
+    differences_dict[colName] = diff_ab, diff_ac, diff_bc
+
+    if diff_ab > 20 or diff_bc > 20 or diff_ac > 20:
+        print(f"{colName} has large differences.")
 
 
 """List of results as dictionary"""
 total_dict = {}
-differences_dict = {}
 averages_dict = {}
 results = {}
 
@@ -88,7 +90,7 @@ for colName in server_cols:
     """Below adds each calculation to it's own, separate dictionary"""
     total_dict[colName] = find_total(colName)
     averages_dict[colName] = find_avg(colName)
-    # differences_dict[colName] = find_difference(colName)
+
 
 """Print Results to outfile"""
 
